@@ -1,0 +1,24 @@
+name: Puppeteer Automation 2
+
+on: 
+  repository_dispatch:   
+
+jobs:
+  run-api-puppeteer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkut repository
+        uses: actions/checkout@v2
+
+      - name: Setup up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install 
+
+      - name: Run Puppeteer script
+        run: node figma.js
+  
