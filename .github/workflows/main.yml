@@ -2,6 +2,7 @@ name: API TRIGGER
 
 on: 
   repository_dispatch:
+    types: ['uizard']
 
 jobs:
   api-job-puppeteer:
