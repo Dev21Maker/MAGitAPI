@@ -2,6 +2,7 @@ name: Puppeteer automation
 
 on: 
   repository_dispatch:
+    types: ['dhiwise']
 
 jobs:
   run-puppeteer:
