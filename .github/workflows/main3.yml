@@ -1,5 +1,8 @@
 name: Puppeteer automation
-
+env:
+  REPO_OWNER: meroware
+  RENO_NAME: MAGitAPI
+  GITHUB_TOKEN: ${{secrets.TOKEN}}
 on: 
   repository_dispatch:
     types: ['dhiwise']
