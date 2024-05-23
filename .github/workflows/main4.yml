@@ -22,8 +22,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-         npm install puppeteer-extra
-         npm install puppeteer-extra-plugin-stealth
+         npm install 
 
 
       - name: Run puppeteer script Basic
