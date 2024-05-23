@@ -1,7 +1,8 @@
 name: Puppeteer Automation 2
 
 on: 
-  repository_dispatch:   
+  repository_dispatch:
+    types: ['figma']
 
 jobs:
   run-api-puppeteer:
