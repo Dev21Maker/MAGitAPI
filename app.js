@@ -1,27 +1,49 @@
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const puppeteer = require('puppeteer-extra')
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin());
 async function delay(time) {
   return new Promise(function(resolve) {
     setTimeout(resolve, time);
   });
 }
-// Use the stealth plugin
-puppeteer.use(StealthPlugin());
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: true });
-  const page = await browser.newPage();
-  await page.goto('https://google.com');
-  // Your puppeteer code here
-  await page.waitForSelector("#L2AGLb > div");
-  await delay(200);
-  await page.click("#L2AGLb > div");
+  try {
+    const browser = await puppeteer.launch({
+      headless: true,
+      executablePath:"chrome/win64-116.0.5793.0/chrome-win64/chrome.exe"
+    })
+    const page = await browser.newPage()
+    const navigationPromise = page.waitForNavigation()
+    await page.setViewport({ width: 1280, height: 800 })
+    // GO TO AUTH PAGE
+    await page.goto("https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fwww.google.com%2F&ec=GAZAmgQ&hl=pl&ifkv=AaSxoQynLHFT41XvnHO0qMUa-Ige-Jj1b7Z0AUcdxumtdX0V6vPvaM4Uon7xhCuYfrxeI2duqrNj3g&passive=true&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-2062953204%3A1716543779572040&ddm=0", {
+      waitUntil: "networkidle2",
+    })
 
-  await page.waitForSelector("#gb > div > div.gb_Ud > a");
-  await delay(200);
-  await page.click("#gb > div > div.gb_Ud > a");
+    await page.waitForSelector("#identifierId")
+    await delay(200)
+    await page.type("#identifierId", "dev21maker@gmail.com")
 
-  
-  await page.screenshot({ path: 'screenshot.png' });
-  await browser.close();
+    await page.waitForSelector("#identifierNext > div > button > div.VfPpkd-RLmnJb")
+    await delay(200)
+    await page.click("#identifierNext > div > button > div.VfPpkd-RLmnJb")
+
+    await page.waitForNavigation()
+
+    await page.waitForSelector("#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input")
+    await delay(200)
+    await page.type("#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input", "nQrev60.rekam")
+
+    await page.waitForSelector("#passwordNext > div > button > div.VfPpkd-RLmnJb")
+    await delay(200)
+    await page.click("#passwordNext > div > button > div.VfPpkd-RLmnJb")
+
+    await page.waitForNavigation()
+
+    await broser.close()
+
+  } catch (e) {
+    console.log(e);
+  } 
 })();
