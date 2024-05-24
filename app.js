@@ -41,6 +41,8 @@ async function delay(time) {
 
     await page.waitForNavigation()
 
+    await page.screenshot({path: "screenshot.png"})
+
     await broser.close()
 
   } catch (e) {
