@@ -6,8 +6,8 @@ async function delay(time) {
     setTimeout(resolve, time);
   });
 }
-const puppeteerCacheDir = process.env.PUPPETEER_CACHE_DIR || path.join(require('os').homedir(), '.cache', 'puppeteer');
-const chromeDir = `${puppeteerCasheDir}/chrome/win64-116.0.5793.0/chrome-win64/chrome.exe`;
+// const puppeteerCacheDir = process.env.PUPPETEER_CACHE_DIR || path.join(require('os').homedir(), '.cache', 'puppeteer');
+const chromeDir = "/home/runner/work/MAGitAPI/MAGitAPI/chrome/linux-116.0.5793.0/chrome-linux64/chrome";//`${puppeteerCasheDir}/chrome/win64-116.0.5793.0/chrome-win64/chrome.exe`;
 (async () => {
   try {
     const browser = await puppeteer.launch({
