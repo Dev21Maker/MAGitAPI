@@ -32,7 +32,8 @@ const chromeDir = "/home/runner/work/MAGitAPI/MAGitAPI/chrome/linux-116.0.5793.0
     await page.click("#identifierNext > div > button > div.VfPpkd-RLmnJb")
 
     await page.waitForNavigation()
-    
+
+    await delay(1000)
     await page.screenshot({path: "screenshot.png"})
     
     await page.waitForSelector("#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input")
