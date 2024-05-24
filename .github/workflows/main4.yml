@@ -36,7 +36,7 @@ jobs:
             puppeteer-${{ runner.os }}-  # Allow partial key matching for restoring cache
 
       - name: Install Puppeteer browser
-        run: npx @puppeteer/browsers install chrome@stable # Install the Puppeteer browser
+        run: npm i @puppeteer/browsers@1.7.1 # Install the Puppeteer browser
         env:
           PUPPETEER_CACHE_DIR: ${{ env.PUPPETEER_CACHE_DIR }}  # Use the cache directory path
 
