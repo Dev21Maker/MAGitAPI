@@ -22,8 +22,20 @@ jobs:
       
       - name: Install dependencies
         run: |
-         npm install 
+          npm install 
+      - name: Cache Puppeteer browser
+        id: cache-puppeteer
+        uses: actions/cache@v3  # Use the cache action
+        with:
+          path: ${{ env.PUPPETEER_CACHE_DIR }}  # Specify the cache directory path
+          key: puppeteer-${{ runner.os }}-${{ hashFiles('package-lock.json') }}  # Define a unique cache key
+          restore-keys: |
+            puppeteer-${{ runner.os }}-  # Allow partial key matching for restoring cache
 
+      - name: Install Puppeteer browser
+        run: npx @puppeteer/browsers install chrome@116.0.5793.0  # Install the Puppeteer browser
+        env:
+          PUPPETEER_CACHE_DIR: ${{ env.PUPPETEER_CACHE_DIR }}  # Use the cache directory path
 
       - name: Run puppeteer script Basic
         run: node app.js
