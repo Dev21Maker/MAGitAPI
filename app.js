@@ -51,5 +51,6 @@ const chromeDir = "/home/runner/work/MAGitAPI/MAGitAPI/chrome/linux-116.0.5793.0
 
   } catch (e) {
     console.log(e);
+    process.exit(1);
   } 
 })();
