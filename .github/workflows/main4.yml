@@ -7,10 +7,13 @@ on:
   repository_dispatch:
     types: ['basic']
 
+
 jobs:
   api-job-puppeteer:
     runs-on: ubuntu-latest
-
+    env:
+     PUPPETEER_CACHE_DIR: ~/.cache/puppeteer
+     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
