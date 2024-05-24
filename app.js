@@ -21,17 +21,20 @@ const chromeDir = "/home/runner/work/MAGitAPI/MAGitAPI/chrome/linux-116.0.5793.0
     await page.goto("https://accounts.google.com/v3/signin/identifier?continue=https%3A%2F%2Fwww.google.com%2F&ec=GAZAmgQ&hl=pl&ifkv=AaSxoQynLHFT41XvnHO0qMUa-Ige-Jj1b7Z0AUcdxumtdX0V6vPvaM4Uon7xhCuYfrxeI2duqrNj3g&passive=true&flowName=GlifWebSignIn&flowEntry=ServiceLogin&dsh=S-2062953204%3A1716543779572040&ddm=0", {
       waitUntil: "networkidle2",
     })
-
     await page.waitForSelector("#identifierId")
     await delay(200)
     await page.type("#identifierId", "dev21maker@gmail.com")
 
-    await page.waitForSelector("#identifierNext > div > button > div.VfPpkd-RLmnJb")
+    await page.waitForSelector("#identifierNext > div > button > div.VfPpkd-RLmnJb") 
+    
+
     await delay(200)
     await page.click("#identifierNext > div > button > div.VfPpkd-RLmnJb")
 
     await page.waitForNavigation()
-
+    
+    await page.screenshot({path: "screenshot.png"})
+    
     await page.waitForSelector("#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input")
     await delay(200)
     await page.type("#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input", "nQrev60.rekam")
