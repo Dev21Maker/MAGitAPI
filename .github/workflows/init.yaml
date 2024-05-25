@@ -14,10 +14,5 @@ jobs:
         node-version: '18'
         cache: 'npm'
         cache-dependency-path: '**/.github/workflows/*.yml'
-    - name: Configure Git for commits
-      run: |-
-        git config user.name "Automated"
-        git config user.email "actions@users.noreply.github.com"
     - name: GitHub
-      run: |-
-        npx npx @puppeteer/browsers install chrome@116.0.5793.0
+      run: npx @puppeteer/browsers install chrome@116.0.5793.0
