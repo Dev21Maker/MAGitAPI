@@ -55,6 +55,6 @@ jobs:
 
     - name: Push changes
       run: |
-        git push
+        git lfs push --all origin
       env:
         GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
