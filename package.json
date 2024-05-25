@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@puppeteer/browsers": "^2.2.3",
     "express": "^4.19.2",
     "google-auth-library": "^9.7.0",
     "googleapis": "^134.0.0",

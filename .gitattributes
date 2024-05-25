@@ -1,0 +1,2 @@
+chrome/linux-116.0.5793.0/chrome-linux64/chrome filter=lfs diff=lfs merge=lfs -text
+node_modules/puppeteer/.local-chromium/linux-1022525/chrome-linux/chrome filter=lfs diff=lfs merge=lfs -text
