@@ -1,16 +1,41 @@
-name: Scrape latest schemas
+name: Download Chrome
 
 on:
-  workflow_dispatch:
-  
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  scheduled:
+  download-chrome:
     runs-on: ubuntu-latest
+
     steps:
-    
-    - name: Install Node.js
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: '18'
-    - name: GitHub
+
+    - name: Install Puppeteer Browsers Package
+      run: npm install @puppeteer/browsers
+
+    - name: Install specific Chrome version
       run: npx @puppeteer/browsers install chrome@116.0.5793.0
+
+    - name: List installed files
+      run: ls -R node_modules/@puppeteer/browsers
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add .
+        git commit -m 'Downloaded Chrome using npx'
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
