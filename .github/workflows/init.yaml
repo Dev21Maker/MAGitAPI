@@ -1,0 +1,23 @@
+name: Scrape latest schemas
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Ensure npx uses a cache
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: '**/.github/workflows/*.yml'
+    - name: Configure Git for commits
+      run: |-
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+    - name: GitHub
+      run: |-
+        npx npx @puppeteer/browsers install chrome@116.0.5793.0
