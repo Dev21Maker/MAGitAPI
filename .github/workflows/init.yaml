@@ -38,4 +38,4 @@ jobs:
         git commit -m 'Downloaded Chrome using npx'
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
