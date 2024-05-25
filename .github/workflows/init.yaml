@@ -50,8 +50,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
 
+    - name: Increase Git buffer size
+      run: git config --global http.postBuffer 157286400
+
     - name: Push changes
       run: |
         git push
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
