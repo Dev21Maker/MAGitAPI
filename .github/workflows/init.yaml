@@ -1,12 +1,14 @@
 name: Download Chrome
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  repository_dispatch:
+    event: "download"
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
   download-chrome:
