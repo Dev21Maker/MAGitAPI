@@ -2,7 +2,7 @@ name: Download Chrome
 
 on:
   repository_dispatch:
-    event: "download"
+     types: ['download']
   # push:
   #   branches:
   #     - main
