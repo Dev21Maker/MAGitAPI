@@ -3,6 +3,12 @@ name: Download Chrome
 on:
   repository_dispatch:
      types: ['download']
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   # push:
   #   branches:
   #     - main
