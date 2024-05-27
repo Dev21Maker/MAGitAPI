@@ -48,8 +48,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
 
-    - name: Set Git buffer size to 1 GB
-      run: git config --global http.postBuffer 1073741824
+    - name: Set Git buffer size to 500 MB
+      run: git config --global http.postBuffer 524288000 
 
     - name: Pull latest changes
       run: |
