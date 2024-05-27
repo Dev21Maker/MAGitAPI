@@ -37,12 +37,7 @@ jobs:
         git lfs track "chrome/linux-116.0.5793.0/chrome-linux64/chrome"
         git lfs track "node_modules/puppeteer/.local-chromium/linux-1022525/chrome-linux/chrome"
         git add .gitattributes
-        
-    - name: Install dependencies for Chromium
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libnss3 libatk-bridge2.0-0 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libasound2 libpangocairo-1.0-0 libpango-1.0-0 libcups2 libxshmfence1
-    
+      
     - name: Add and commit changes
       run: |
         git config --global user.name 'github-actions'
