@@ -7,7 +7,7 @@ async function delay(time) {
   });
 }
 // const puppeteerCacheDir = process.env.PUPPETEER_CACHE_DIR || path.join(require('os').homedir(), '.cache', 'puppeteer');
-const chromeDir = "chrome/linux-116.0.5793.0/chrome-linux64/chrome";//`${puppeteerCasheDir}/chrome/win64-116.0.5793.0/chrome-win64/chrome.exe`;
+const chromeDir = "./chrome/linux-116.0.5793.0/chrome-linux64/chrome";//`${puppeteerCasheDir}/chrome/win64-116.0.5793.0/chrome-win64/chrome.exe`;
 (async () => {
   try {
     const browser = await puppeteer.launch({
