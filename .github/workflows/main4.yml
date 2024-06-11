@@ -30,7 +30,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgbm-dev
+          sudo apt-get install -y libx11-xcb1 libxtst6 libxss1 libnss3 libatk-bridge2.0-0 libxkbcommon0 libpangocairo-1.0-0
+
+      - name: Verify Chrome installation
+        run: ./chrome/linux-116.0.5793.0/chrome-linux64/chrome --version
+      
       - name: Cache Puppeteer browser
         id: cache-puppeteer
         uses: actions/cache@v3  # Use the cache action
