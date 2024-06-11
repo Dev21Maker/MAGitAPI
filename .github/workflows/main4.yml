@@ -45,6 +45,9 @@ jobs:
         env:
           PUPPETEER_CACHE_DIR: ${{ env.PUPPETEER_CACHE_DIR }}  # Use the cache directory path
 
+      - name: Add execute permissions to Chrome binary
+        run: chmod +x ./node_modules/.cache/puppeteer/chrome/linux-116.0.5793.0/chrome-linux/chrome
+
       - name: Run puppeteer script Basic
         run: node app.js
       
