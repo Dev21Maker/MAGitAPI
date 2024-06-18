@@ -117,7 +117,7 @@ async function isExist(page) {
 
 (async () => {
   try {
-    const browser = await puppeteer.launch({headless: false})
+    const browser = await puppeteer.launch({headless: false, executablePath: "./chrome/linux-116.0.5793.0/chrome-linux64/chrome"})
     const page = await browser.newPage()
     const navigationPromise = page.waitForNavigation()
 
