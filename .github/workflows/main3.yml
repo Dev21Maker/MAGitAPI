@@ -28,4 +28,11 @@ jobs:
 
       - name: Run Puppeteer script
         run: node dhi_wise.js
+
+      - name: Store file
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+           name: script-output
+           path: screenshot.png   
     
