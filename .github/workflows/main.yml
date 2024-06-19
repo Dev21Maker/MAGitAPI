@@ -25,7 +25,7 @@ jobs:
 
 
       - name: Run puppeteer script Uizard
-        run: node index_11.js
+        run: node uizard.js
         env: 
           UIZARD_PASSWORD: secrets.UIZARD_PASSWORD
           LOGIN: secrets.LOGIN
