@@ -73,7 +73,7 @@ async function delay(time) {
     await delay(60000)
     } catch(e) {
       console.log(e)
-      page.screenshot({path: 'screenshot.png'});
+      await page.screenshot({path: 'screenshot.png'});
       process.exit(1)
     }
 })();
