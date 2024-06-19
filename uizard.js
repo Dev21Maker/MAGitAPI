@@ -20,7 +20,11 @@ async function delay(time) {
     })
 
     await delay(2000)
-
+        
+    await page.waitForSelector('#app-root')
+    await delay(200)
+    await page.click('#app-root')
+    
     await page.waitForSelector('#app-root > div > div > div.styles__Content-sc-1uor35h-1.hzYiqf > div.AuthContent-sc-1gkngd7-0.yZLki > form > div:nth-child(1) > div.Inputstyles__InputContainer-sc-1qligmc-0.eKcDFc > input')
     await delay(200)
     await page.type('#app-root > div > div > div.styles__Content-sc-1uor35h-1.hzYiqf > div.AuthContent-sc-1gkngd7-0.yZLki > form > div:nth-child(1) > div.Inputstyles__InputContainer-sc-1qligmc-0.eKcDFc > input', process.env.LOGIN)
