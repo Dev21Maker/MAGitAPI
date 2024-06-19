@@ -29,6 +29,14 @@ jobs:
         env: 
           UIZARD_PASSWORD: secrets.UIZARD_PASSWORD
           LOGIN: secrets.LOGIN
+          
+      - name: Store file
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+           name: script-output
+           path: screenshot.png
+        
         
         
     
