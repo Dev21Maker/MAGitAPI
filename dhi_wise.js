@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-require('dotenv').config();
 
 async function delay(time) {
     return new Promise(function (resolve) {
@@ -20,7 +19,7 @@ async function delay(time) {
                            
           const loginButton = await page.waitForSelector('xpath/html/body/div[1]/div/div/div/div/div/div[2]/form/div[1]/div/div/input')
           await delay(200)
-          loginButton.type()
+          loginButton.type(process.env.LOGIN)
       
           const passwordButton = await page.waitForSelector('xpath/html/body/div[1]/div/div/div/div/div/div[2]/form/div[2]/div/div/input')
           await delay(200)
