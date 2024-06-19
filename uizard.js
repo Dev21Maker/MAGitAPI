@@ -23,7 +23,7 @@ async function delay(time) {
 
     await page.waitForSelector('#app-root > div > div > div.styles__Content-sc-1uor35h-1.hzYiqf > div.AuthContent-sc-1gkngd7-0.yZLki > form > div:nth-child(1) > div.Inputstyles__InputContainer-sc-1qligmc-0.eKcDFc > input')
     await delay(200)
-    await page.type('#app-root > div > div > div.styles__Content-sc-1uor35h-1.hzYiqf > div.AuthContent-sc-1gkngd7-0.yZLki > form > div:nth-child(1) > div.Inputstyles__InputContainer-sc-1qligmc-0.eKcDFc > input', process.env.DHI_LOGIN)
+    await page.type('#app-root > div > div > div.styles__Content-sc-1uor35h-1.hzYiqf > div.AuthContent-sc-1gkngd7-0.yZLki > form > div:nth-child(1) > div.Inputstyles__InputContainer-sc-1qligmc-0.eKcDFc > input', process.env.LOGIN)
 
     await page.waitForSelector('#app-root > div > div > div.styles__Content-sc-1uor35h-1.hzYiqf > div.AuthContent-sc-1gkngd7-0.yZLki > form > div:nth-child(2) > div.LoginFormstyles__InputContainer-sc-mi4qvc-0.kepYrM > div.Inputstyles__InputContainer-sc-1qligmc-0.eKcDFc > input')
     await delay(200)
