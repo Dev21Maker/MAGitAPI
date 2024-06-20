@@ -3,6 +3,11 @@ name: API TRIGGER
 on: 
   repository_dispatch:
     types: ['uizard']
+    inputs:
+      URL: 
+        description: 'Figma url'
+        required: true
+        default: 'none'
 
 jobs:
   api-job-puppeteer:
@@ -29,6 +34,7 @@ jobs:
         env: 
           UIZARD_PASSWORD: ${{ secrets.UIZARD_PASSWORD }}
           LOGIN: ${{ secrets.LOGIN }}
+          URL: ${{ github.event.inputs.URL }}
           
       - name: Store file
         if: always()
