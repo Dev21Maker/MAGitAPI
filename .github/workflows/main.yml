@@ -27,8 +27,8 @@ jobs:
       - name: Run puppeteer script Uizard
         run: node uizard.js
         env: 
-          UIZARD_PASSWORD: secrets.UIZARD_PASSWORD
-          LOGIN: secrets.LOGIN
+          UIZARD_PASSWORD: ${{ secrets.UIZARD_PASSWORD }}
+          LOGIN: ${{ secrets.LOGIN }}
           
       - name: Store file
         if: always()
