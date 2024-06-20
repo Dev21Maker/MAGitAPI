@@ -45,7 +45,7 @@ async function delay(time) {
       
           const figmaUrlButton = await page.waitForSelector('xpath/html/body/div[1]/div/div/div/div[1]/div[2]/div[1]/div/div[5]/div/div/input')
           await delay(200)
-          cosnole.log(process.argv[2])
+          console.log(process.argv[2])
           console.log(process.env.URL)
           await figmaUrlButton.type(process.env.URL)
             
