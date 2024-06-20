@@ -28,6 +28,9 @@ jobs:
 
       - name: Run Puppeteer script
         run: node dhi_wise.js
+        env: 
+          LOGIN: ${{ secrets.LOGIN }}
+          DHI_PASSWORD: ${{ secrets.DHI_PASSWORD }}
 
       - name: Store file
         if: always()
