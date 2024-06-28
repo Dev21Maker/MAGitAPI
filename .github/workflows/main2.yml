@@ -41,7 +41,7 @@ jobs:
   
     steps:
       - name: Call Reusable Workflow
-        uses: ./.github/workflows/main6.yml
+        uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
         with:
           build_status: ${{ needs.build.outputs.status }}    
   
