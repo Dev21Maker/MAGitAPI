@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: Checkut repository
         uses: actions/checkout@v2
+      
+      - name: Predefine failure
+        run: |
+          echo "::set-output name=status::failure"
 
       - name: Setup up Node.js
         uses: actions/setup-node@v2
@@ -23,9 +27,12 @@ jobs:
           npm install puppeteer-extra
           npm install puppeteer-extra-plugin-stealth
 
-
       - name: Run Puppeteer script
         run: node figma.js
+
+      - name: Success
+        run: |
+           echo "::set-output name=status::success"
 
   notify:
     needs: run-api-puppeteer
