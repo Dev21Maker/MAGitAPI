@@ -1,0 +1,36 @@
+name: Add data to Supabase
+
+on: 
+  workflow_call
+  
+jobs:
+   notify-success:
+    runs-on: ubuntu-latest
+    if: needs.build.result == 'success'
+    steps:
+      - name: Notify success to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+        run: |
+          curl -X POST "$SUPABASE_URL/rest/v1/jobs_history" \
+          -H "Content-Type: application/json" \
+          -H "apikey: $SUPABASE_API_KEY" \
+          -H "Authorization: Bearer $SUPABASE_API_KEY" \
+          -d '{"user_name" : "dump_user", "status": True, "project_name" : "DO_01" }'
+
+
+   notify-failure:
+    runs-on: ubuntu-latest
+    if: needs.build.result == 'failure'
+    steps:
+      - name: Notify failure to Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+        run: |
+          curl -X POST "$SUPABASE_URL/rest/v1/jobs_history" \
+          -H "Content-Type: application/json" \
+          -H "apikey: $SUPABASE_API_KEY" \
+          -H "Authorization: Bearer $SUPABASE_API_KEY" \
+          -d '{"user_name" : "dump_user", "status" : False, "project_name" : "DO_01"}'
