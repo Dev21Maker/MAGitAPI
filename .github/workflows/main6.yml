@@ -1,7 +1,12 @@
 name: Add data to Supabase
 
 on: 
-  workflow_call
+  workflow_call:
+    inputs:
+     build_status:
+         required: true
+         description: 'status of the build'
+         type: string
   
 jobs:
    notify-success:
