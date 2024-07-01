@@ -10,14 +10,14 @@ jobs:
     outputs: 
       status: ${{ steps.result.outputs.status }}
     steps:
-      - name: Checkut repository
+      - name: Checkout repository
         uses: actions/checkout@v2
       
       - name: Predefine failure
-        run: |
-          echo "status=failure" >> $GITHUB_ENV
+        id: set-failure
+        run: echo "status=failure" >> $GITHUB_ENV
 
-      - name: Setup up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '20'
@@ -29,24 +29,27 @@ jobs:
           npm install puppeteer-extra-plugin-stealth
 
       - name: Run Puppeteer script
+        id: run-script
         run: node figma.js
 
-      - name: Success
-        run: |
-           echo "status=success" >> $GITHUB_ENV
-      - name: Result
-        if: always()
-        run: |
-          echo "status=$status" >> $GITHUB_OUTPUTS
+      - name: Set success status
+        if: success()
+        run: echo "status=success" >> $GITHUB_ENV
+
+      - name: Set job output
+        id: result
+        run: echo "status=${{ env.status }}" >> $GITHUB_OUTPUT
+
   display:
     needs: run-api-puppeteer
     runs-on: ubuntu-latest
     steps:
-      - name: show_result
+      - name: Show result
         run: echo "${{ needs.run-api-puppeteer.outputs.status }}"
+
   notify:
     needs: run-api-puppeteer
     uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
     with:
       build_status: ${{ needs.run-api-puppeteer.outputs.status }}
-    secrets: inherit         
+    secrets: inherit
