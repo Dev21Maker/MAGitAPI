@@ -24,14 +24,13 @@ jobs:
           -H "Authorization: Bearer $SUPABASE_API_KEY" \
           -d '{"user_name" : "dump_user", "status": True, "project_name" : "DO_01" }'
 
-
    notify-failure:
     runs-on: ubuntu-latest
-    # if: ${{ inputs.build_status == 'failure' }}
+    if: ${{ inputs.build_status == 'failure' }}
     steps:
       - name: Display Build Status
-        run: |
-          echo "${inputs.build_status}"
+        run: echo "${{ inputs.build_status }}"
+        
       - name: Notify failure to Supabase
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
