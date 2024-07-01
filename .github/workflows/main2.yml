@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Call Reusable Workflow
-        uses: ./.github/workflows/main6.yml@main
+        uses: /home/runner/work/Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
         with:
           build_status: ${{ needs.build.outputs.status }}    
   
