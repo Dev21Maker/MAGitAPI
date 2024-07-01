@@ -33,6 +33,12 @@ jobs:
       - name: Success
         run: |
            echo "status=success" >> "$GITHUB_OUTPUT"
+  display:
+    needs: run-api-puppeteer
+    runs-on: ubuntu-latest
+    steps:
+      - name: show_result
+        run: echo "${{ needs.run-api-puppeteer.outputs.status }}"
   notify:
     needs: run-api-puppeteer
     uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
