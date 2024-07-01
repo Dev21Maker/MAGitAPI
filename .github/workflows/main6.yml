@@ -27,7 +27,7 @@ jobs:
 
    notify-failure:
     runs-on: ubuntu-latest
-    if: ${{ inputs.build_status == 'failure' }}
+    # if: ${{ inputs.build_status == 'failure' }}
     steps:
       - name: Notify failure to Supabase
         env:
