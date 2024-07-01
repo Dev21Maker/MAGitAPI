@@ -54,5 +54,7 @@ function delay(time) {
 
     // await navigationPromise
 
+  
+    await browser.close();
     
 })();
