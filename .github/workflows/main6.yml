@@ -29,6 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     # if: ${{ inputs.build_status == 'failure' }}
     steps:
+      - name: Display Build Status
+        run: |
+          echo "${inputs.build_status}"
       - name: Notify failure to Supabase
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
