@@ -40,11 +40,11 @@ jobs:
     if: always()
   
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      # - name: Checkout repository
+      #   uses: actions/checkout@v2
 
       - name: Call Reusable Workflow
-        uses: /home/runner/work/Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
+        uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
         with:
           build_status: ${{ needs.build.outputs.status }}    
   
