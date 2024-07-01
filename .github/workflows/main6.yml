@@ -11,7 +11,7 @@ on:
 jobs:
    notify-success:
     runs-on: ubuntu-latest
-    if: needs.build.result == 'success'
+    if: ${{ inputs.build_status == 'success' }}
     steps:
       - name: Notify success to Supabase
         env:
@@ -27,7 +27,7 @@ jobs:
 
    notify-failure:
     runs-on: ubuntu-latest
-    if: needs.build.result == 'failure'
+    if: ${{ inputs.build_status == 'failure' }}
     steps:
       - name: Notify failure to Supabase
         env:
