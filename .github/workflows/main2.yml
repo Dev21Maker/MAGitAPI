@@ -37,7 +37,7 @@ jobs:
       - name: Result
         if: always()
         run: |
-          echo "status=${status}" >> $GITHUB_OUTPUTS
+          echo "status=$status" >> $GITHUB_OUTPUTS
   display:
     needs: run-api-puppeteer
     runs-on: ubuntu-latest
