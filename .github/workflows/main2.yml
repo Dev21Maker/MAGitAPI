@@ -7,7 +7,8 @@ on:
 jobs:
   run-api-puppeteer:
     runs-on: ubuntu-latest
-
+    outputs: 
+      status: $status
     steps:
       - name: Checkut repository
         uses: actions/checkout@v2
@@ -32,7 +33,7 @@ jobs:
 
       - name: Success
         run: |
-           echo "status=success" >> $GITHUB_OUTPUT
+           echo "status=success" >> $GITHUB_ENV
   display:
     needs: run-api-puppeteer
     runs-on: ubuntu-latest
