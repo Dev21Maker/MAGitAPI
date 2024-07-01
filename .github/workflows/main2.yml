@@ -14,7 +14,7 @@ jobs:
       
       - name: Predefine failure
         run: |
-          echo "::set-output name=status::failure"
+          echo "status=failure" >> "$GITHUB_OUTPUT"
 
       - name: Setup up Node.js
         uses: actions/setup-node@v2
@@ -32,7 +32,7 @@ jobs:
 
       - name: Success
         run: |
-           echo "::set-output name=status::success"
+           echo "status=success" >> "$GITHUB_OUTPUT"
   notify:
     needs: run-api-puppeteer
     uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
