@@ -35,6 +35,7 @@ jobs:
         run: |
            echo "status=success" >> $GITHUB_ENV
       - name: Result
+        if: always()
         run: |
           echo "status=${status}" >> $GITHUB_OUTPUTS
   display:
