@@ -40,9 +40,6 @@ jobs:
     if: always()
   
     steps:
-      # - name: Checkout repository
-      #   uses: actions/checkout@v2
-
       - name: Call Reusable Workflow
         uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
         with:
