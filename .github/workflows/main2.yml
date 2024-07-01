@@ -33,15 +33,9 @@ jobs:
       - name: Success
         run: |
            echo "::set-output name=status::success"
-
   notify:
     needs: run-api-puppeteer
-    runs-on: ubuntu-latest
-    if: always()
-  
-    steps:
-      - name: Call Reusable Workflow
-        uses: .github/workflows/main6.yml@main
-        with:
-          build_status: ${{ needs.build.outputs.status }}    
-  
+    uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
+    with:
+      build_status: ${{ needs.run-api-puppeteer.outputs.status }}
+    secrets: inherit         
