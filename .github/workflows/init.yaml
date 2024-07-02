@@ -42,7 +42,7 @@ jobs:
 
     - name: Upload File to B2
       run: |
-        FILE_TO_UPLOAD="path/to/your/file.txt"
+        FILE_TO_UPLOAD="Dev21Maker/MAGitAPI/text_passage.txt"
         UPLOAD_URL=${{ steps.b2_upload_url.outputs.upload_url }}
         AUTHORIZATION_TOKEN=${{ steps.b2_upload_url.outputs.authorization_token }}
         curl -H "Authorization: $AUTHORIZATION_TOKEN" \
