@@ -3,7 +3,6 @@ name: Upload File to Backblaze B2 using rClone
 on:
   repository_dispatch:
     types: ['download']
-
 jobs:
   upload_to_b2:
     runs-on: ubuntu-latest
@@ -19,15 +18,14 @@ jobs:
 
     - name: Configure rClone for B2
       run: |
-        rclone config create b2-backup b2 \
-          account=$B2_ACCOUNT_ID \
-          key=$B2_APPLICATION_KEY \
-          --non-interactive
-      env:
-        B2_ACCOUNT_ID: ${{ secrets.B2_ACCOUNT_ID }}
-        B2_APPLICATION_KEY: ${{ secrets.B2_APPICATION_KEY }}
+        mkdir -p ~/.config/rclone/
+        echo "[b2-backup]" > ~/.config/rclone/rclone.conf
+        echo "type = b2" >> ~/.config/rclone/rclone.conf
+        echo "account = ${{ secrets.B2_ACCOUNT_ID }}" >> ~/.config/rclone/rclone.conf
+        echo "key = ${{ secrets.B2_APPICATION_KEY }}" >> ~/.config/rclone/rclone.conf
 
     - name: Upload File to B2
       run: |
-        rclone copy path/to/your/file.txt b2-backup:${{ secrets.B2_BUCKET_NAME }} --b2-chunk-size 96M
-
+        rclone copy path/to/your/file.txt b2-backup:${{ secrets.B2_BUCKET_NAME }}
+      env:
+        B2_BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
