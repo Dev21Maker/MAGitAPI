@@ -25,8 +25,8 @@ jobs:
       id: b2_auth
       run: |
         B2_ACCOUNT_ID=${{ secrets.B2_ACCOUNT_ID }}
-        B2_APPLICATION_KEY=${{ secrets.B2_APPLICATION_KEY }}
-        auth_result=$(b2 authorize-account $B2_ACCOUNT_ID $B2_APPLICATION_KEY)
+        B2_APPLICATION_KEY=${{ secrets.B2_APPLICAT0ION_KEY }}
+        auth_result=$(echo "$B2_APPLICATION_KEY" | b2 account authorize "$B2_ACCOUNT_ID")
         echo "name=auth_token::$(echo $auth_result | jq -r '.authorizationToken')" >> $GITHUB_OUTPUTS
         echo "name=api_url::$(echo $auth_result | jq -r '.apiUrl')" >> $GITHUB_OUTPUTS
         echo "name=download_url::$(echo $auth_result | jq -r '.downloadUrl')" >> $GITHUB_OUTPUTS
