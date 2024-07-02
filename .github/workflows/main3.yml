@@ -50,8 +50,8 @@ jobs:
            name: script-output
            path: screenshot.png
 
-   notify:
-    needs: run-api-puppeteer
+  notify:
+    needs: run-puppeteer
     uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
     with:
       build_status: ${{ needs.run-api-puppeteer.outputs.status }}
