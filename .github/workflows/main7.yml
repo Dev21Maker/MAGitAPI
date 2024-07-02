@@ -2,6 +2,10 @@ name: Download and Upload Images to Figma
 
 on:
   workflow_dispatch:
+    inputs:
+      download_folder:
+        required: true
+        type: string
 
 jobs:
   download_folder:
@@ -29,5 +33,5 @@ jobs:
       id: download
       run: |
         mkdir -p download-folder
-        rclone sync b2-backup:${{ secrets.B2_BUCKET_NAME }}/path/to/folder download-folder/
+        rclone sync b2-backup:${{ secrets.B2_BUCKET_NAME }} ${{ inputs.download_folder }}/
      
