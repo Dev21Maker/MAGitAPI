@@ -26,6 +26,6 @@ jobs:
 
     - name: Upload File to B2
       run: |
-        rclone copy path/to/your/file.txt b2-backup:${{ secrets.B2_BUCKET_NAME }}
+        rclone copy Dev21Maker/MAGitAPI/text_passage.txt b2-backup:${{ secrets.B2_BUCKET_NAME }}
       env:
         B2_BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
