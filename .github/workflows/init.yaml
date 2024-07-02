@@ -27,7 +27,7 @@ jobs:
         B2_ACCOUNT_ID: ${{ secrets.B2_ACCOUNT_ID }}
         B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
       run: |
-        b2 authorize-account $B2_ACCOUNT_ID $B2_APPLICATION_KEY
+        b2 account authorize $B2_ACCOUNT_ID $B2_APPLICATION_KEY
         b2 get-account-info > account_info.json
         cat account_info.json
         echo "auth_token=$(jq -r '.authorizationToken' account_info.json)" >> $GITHUB_ENV
