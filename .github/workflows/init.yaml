@@ -1,66 +1,51 @@
-name: Download Chrome
+name: Upload File to Backblaze B2
 
 on:
   repository_dispatch:
      types: ['download']
-  # push:
-  #   branches:
-  #     - main
-  # pull_request:
-  #   branches:
-  #     - main
-  # push:
-  #   branches:
-  #     - main
-  # pull_request:
-  #   branches:
-  #     - main
+
 jobs:
-  download-chrome:
+  upload_to_b2:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
       with:
-        lfs: true
-        token: ${{ secrets.FULL_ACCESS }}
+        python-version: '3.x'
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'
-
-    - name: Install Puppeteer Browsers Package
-      run: npm install @puppeteer/browsers
-
-    - name: Install specific Chrome version
-      run: npx @puppeteer/browsers install chrome@116.0.5793.0
-
-    - name: Track large files with Git LFS
+    - name: Install B2 CLI
       run: |
-        git lfs install
-        git lfs track "chrome/linux-116.0.5793.0/chrome-linux64/chrome"
-        git lfs track "node_modules/puppeteer/.local-chromium/linux-1022525/chrome-linux/chrome"
-        git add .gitattributes
-      
-    - name: Add and commit changes
-      run: |
-        git config --global user.name 'github-actions'
-        git config --global user.email 'github-actions@github.com'
-        git add .
-        git commit -m 'Downloaded Chrome using npx'
-      env:
-        GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
+        pip install b2
 
-    - name: Pull latest changes
+    - name: Get B2 Auth Token
+      id: b2_auth
       run: |
-        git pull origin main --rebase
-      env:
-        GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
+        B2_ACCOUNT_ID=${{ secrets.B2_ACCOUNT_ID }}
+        B2_APPLICATION_KEY=${{ secrets.B2_APPLICATION_KEY }}
+        auth_result=$(b2 authorize-account $B2_ACCOUNT_ID $B2_APPLICATION_KEY)
+        echo "name=auth_token::$(echo $auth_result | jq -r '.authorizationToken')" >> $GITHUB_OUTPUTS
+        echo "name=api_url::$(echo $auth_result | jq -r '.apiUrl')" >> $GITHUB_OUTPUTS
+        echo "name=download_url::$(echo $auth_result | jq -r '.downloadUrl')" >> $GITHUB_OUTPUTS
+        echo "name=account_id::$(echo $auth_result | jq -r '.accountId')" >> $GITHUB_OUTPUTS
 
-    - name: Push changes
+    - name: Get Upload URL
+      id: b2_upload_url
       run: |
-        git push
-      env:
-        GITHUB_TOKEN: ${{ secrets.FULL_ACCESS }}
+        BUCKET_NAME=${{ secrets.B2_BUCKET_NAME }}
+        UPLOAD_URL_RESULT=$(b2 get-upload-url $BUCKET_NAME)
+        echo "name=upload_url::$(echo $UPLOAD_URL_RESULT | jq -r '.uploadUrl')" >> $GITHUB_OUTPUTS
+        echo "name=authorization_token::$(echo $UPLOAD_URL_RESULT | jq -r '.authorizationToken')" >> $GITHUB_OUTPUTS
+
+    - name: Upload File to B2
+      run: |
+        FILE_TO_UPLOAD="path/to/your/file.txt"
+        UPLOAD_URL=${{ steps.b2_upload_url.outputs.upload_url }}
+        AUTHORIZATION_TOKEN=${{ steps.b2_upload_url.outputs.authorization_token }}
+        curl -H "Authorization: $AUTHORIZATION_TOKEN" \
+             -F "file=@$FILE_TO_UPLOAD" \
+             -F "bucket=${{ secrets.B2_BUCKET_NAME }}" \
+             "$UPLOAD_URL"
