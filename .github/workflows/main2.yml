@@ -8,7 +8,7 @@ jobs:
   download-from-cloud:
     uses: Dev21Maker/MAGitAPI/.github/workflows/main7.yml@main
     with:
-      download_folder: ${{ client_payload.folder_name }}
+      download_folder: ${{ github.event.client_payload.folder_name }}
         
   run-api-puppeteer:
     needs: download-from-cloud
