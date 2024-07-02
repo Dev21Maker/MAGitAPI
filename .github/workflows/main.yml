@@ -7,11 +7,17 @@ on:
 jobs:
   api-job-puppeteer:
     runs-on: ubuntu-latest
-
+    outputs:
+      status: ${{ step.result.outputs.status }}
+  
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+        
+      - name: Predefine failure
+        id: set-failure
+        run: echo "status=failure" >> $GITHUB_ENV
+      
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -30,13 +36,29 @@ jobs:
           UIZARD_PASSWORD: ${{ secrets.UIZARD_PASSWORD }}
           LOGIN: ${{ secrets.LOGIN }}
           URL: ${{ github.event.client_payload.URL }}
+      
+      - name: Set success status
+        if: success()
+        run: echo "status=success" >> $GITHUB_ENV
+
+      - name: Set job output
+        id: result
+        run: echo "status=${{ env.status }}" >> $GITHUB_OUTPUT
           
+      
       - name: Store file
         if: always()
         uses: actions/upload-artifact@v2
         with:
            name: script-output
            path: screenshot.png
+           
+  notify:
+    needs: api-job-puppeteer
+    uses: Dev21Maker/MAGitAPI/.github/workflows/main6.yml@main
+    with:
+      build_status: ${{ needs.run-api-puppeteer.outputs.status }}
+    secrets: inherit
         
         
         
