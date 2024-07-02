@@ -1,8 +1,8 @@
-name: Upload File to Backblaze B2
+name: Upload File to Backblaze B2 using rClone
 
 on:
   repository_dispatch:
-     types: ['download']
+    types: ['download']
 
 jobs:
   upload_to_b2:
@@ -12,47 +12,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-
-    - name: Install B2 CLI
+    - name: Install rClone
       run: |
-        pip install b2
+        sudo apt-get update
+        sudo apt-get install -y rclone
 
-    - name: Get B2 Auth Token
-      id: b2_auth
+    - name: Configure rClone for B2
+      run: |
+        rclone config create b2-backup b2 \
+          account=$B2_ACCOUNT_ID \
+          key=$B2_APPLICATION_KEY \
+          --non-interactive
       env:
         B2_ACCOUNT_ID: ${{ secrets.B2_ACCOUNT_ID }}
-        B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
-      run: |
-        b2 account authorize $B2_ACCOUNT_ID $B2_APPICATION_KEY
-        b2 get-account-info > account_info.json
-        cat account_info.json
-        echo "auth_token=$(jq -r '.authorizationToken' account_info.json)" >> $GITHUB_ENV
-        echo "api_url=$(jq -r '.apiUrl' account_info.json)" >> $GITHUB_ENV
-        echo "download_url=$(jq -r '.downloadUrl' account_info.json)" >> $GITHUB_ENV
-        echo "account_id=$(jq -r '.accountId' account_info.json)" >> $GITHUB_ENV
-
-    - name: Get Upload URL
-      id: b2_upload_url
-      env:
-        B2_ACCOUNT_ID: ${{ secrets.B2_ACCOUNT_ID }}
-        B2_APPLICATION_KEY: ${{ secrets.B2_APPLICATION_KEY }}
-        BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
-      run: |
-        UPLOAD_URL_RESULT=$(b2 get-upload-url $BUCKET_NAME)
-        echo "upload_url=$(echo $UPLOAD_URL_RESULT | jq -r '.uploadUrl')" >> $GITHUB_ENV
-        echo "authorization_token=$(echo $UPLOAD_URL_RESULT | jq -r '.authorizationToken')" >> $GITHUB_ENV
+        B2_APPLICATION_KEY: ${{ secrets.B2_APPICATION_KEY }}
 
     - name: Upload File to B2
-      env:
-        UPLOAD_URL: ${{ env.upload_url }}
-        AUTHORIZATION_TOKEN: ${{ env.authorization_token }}
-        FILE_TO_UPLOAD: Dev21Maker/MAGitAPI/text_passage.txt
-        BUCKET_NAME: ${{ secrets.B2_BUCKET_NAME }}
       run: |
-        curl -H "Authorization: $AUTHORIZATION_TOKEN" \
-             -F "file=@$FILE_TO_UPLOAD" \
-             "$UPLOAD_URL"
+        rclone copy path/to/your/file.txt b2-backup:${{ secrets.B2_BUCKET_NAME }} --b2-chunk-size 96M
+
