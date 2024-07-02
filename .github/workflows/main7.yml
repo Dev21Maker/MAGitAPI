@@ -1,0 +1,33 @@
+name: Download and Upload Images to Figma
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download_folder:
+    runs-on: ubuntu-latest
+    outputs:
+      download-path: ${{ github.workspace }}/download-folder
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install rClone
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y rclone
+
+    - name: Configure rClone for Backblaze B2
+      run: |
+        mkdir -p ~/.config/rclone/
+        echo "[b2-backup]" > ~/.config/rclone/rclone.conf
+        echo "type = b2" >> ~/.config/rclone/rclone.conf
+        echo "account = ${{ secrets.B2_ACCOUNT_ID }}" >> ~/.config/rclone/rclone.conf
+        echo "key = ${{ secrets.B2_APPLICATION_KEY }}" >> ~/.config/rclone/rclone.conf
+
+    - name: Download Folder from Backblaze B2
+      id: download
+      run: |
+        mkdir -p download-folder
+        rclone sync b2-backup:${{ secrets.B2_BUCKET_NAME }}/path/to/folder download-folder/
+     
