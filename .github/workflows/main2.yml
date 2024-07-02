@@ -5,7 +5,10 @@ on:
     types: ['figma']
 
 jobs:
+  download-from-cloud:
+    uses: Dev21Maker/MAGitAPI/.github/workflows/main7.yml@main
   run-api-puppeteer:
+    needs: download-from-cloud
     runs-on: ubuntu-latest
     outputs: 
       status: ${{ steps.result.outputs.status }}
