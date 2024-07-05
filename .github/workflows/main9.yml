@@ -1,0 +1,31 @@
+name: Download from Backblaze B2
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  download_files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up rclone
+      uses: rclone/rclone@v2.0.0
+      with:
+        rclone_version: '1.58.0' # Specify the version you need
+     
+    - name: Configure rclone
+      run: |
+        mkdir -p ~/.config/rclone
+        echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+      env:
+        RCLONE_CONFIG: ${{ secrets.RCLONE_CONFIG }}
+
+    - name: Download files from Backblaze B2
+      run: |
+        rclone copy b2:my-backblaze-bucket/path/to/files /local/directory --progress
